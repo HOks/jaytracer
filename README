@@ -1,0 +1,15 @@
+jaytracer.
+very simple ray tracer in java, currently outputs to .ppm
+currently uses internally defined 3d objects, only spheres and planes.
+no-interface as such, must edit RayDriver.java to construct desired scene,
+screen position, camera position, resolution, raytrace recursion depth and
+output filename.
+
+currently only supports basic raycasting and reflections, colour mixing for
+reflections needs fixing.
+
+high priority TODOs:
+Refraction
+Specular Shading
+Shadows
+Replacing naive intersection finding algorithm

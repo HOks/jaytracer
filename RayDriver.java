@@ -15,6 +15,7 @@ public class RayDriver{
 		//scene.addShape(new Sphere(-3,0,3, 2,665355,0,0));
 		scene.addShape(new Sphere(1.0,-0.8,3.0, 2.5,1,1,1,0.6,0.6));
 		scene.addShape(new Sphere(-5.5,-0.5,7, 2,0.07,0.07,0.1,1,1));
+		scene.addShape(new Sphere(-2,3,5,1.5,0.3,0.9,0.2,0.5,0.5));
 		scene.addShape(new Plane(new Vector3D(-1000,10,-1000),new Vector3D(1,0,0), Integer.MAX_VALUE, new Vector3D(0,0,1), Integer.MAX_VALUE,0.4,0.3,0.3));
 		scene.addLight(new Light(new Vector3D(0,-5,5), new Vector3D(0.6,0.6,0.6)));
 		scene.addLight(new Light(new Vector3D(2,-5,1), new Vector3D(0.7,0.7,0.9)));
