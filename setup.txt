@@ -1,0 +1,37 @@
+raytracer setup files currently follow the below format.
+<width>
+<height>
+<colourdepth>
+<camera X, Y and Z co-ordinates>
+<screen parameters>
+<scenery object name> <scenery object name parameters>xn
+<filename>
+
+RayDriver2 currently uses a very simple parser, which will, depending on it's
+position parsing, will get either the next valid word or next valid number as required, from a java.io.StreamTokenizer with default delimeters.
+as such, while it is very forgiving of choice of delimiters or excess content of the wrong type, it it's very sensitive to invalid or missing content of the required type. note that "number" does not distinguish
+between floats, doubles and ints, nor currently filters invalid values.
+
+the parameters listed above are as follows.
+<width><height><colourdepth> height and width of display in pixels, and colour depth ranging from 1-65535
+Screen(Vector3D origin, Vector3D v1, double l1, Vector3D v2, double l2)
+view angle is determined by position of camera relative to screen.
+<scenery object name>
+String, valid object names are Sphere, Plane, Light, which must be capitalized in this way.
+<scenery object parameters>
+the parameters passed for each object must match the following constructors
+where a Vector3D is present, 3 doubles must be passed representing the X,Y,Z values of this vector.
+
+Sphere(double x, double y, double z, double radius, double r, double g, double b, double t, double ref)
+
+Plane(Vector3D position, Vector3D v1, double l1, Vector3D v2, double l2, double r, double g, double b)
+
+Light(Vector3D origin, Vector3D colour)
+
+Screen(Vector3D origin, Vector3D v1, double l1, Vector3D v2, double l2)
+
+for these objects, r,g,b refer to red green and blue colour values.
+for planes and the screen, v1,v2,l1,l2 represent vectors from the plane segments position which describe it's orientation, and their respective lengths.
+
+<filename> string filename of ppm file to be saved.
+

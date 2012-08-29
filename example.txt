@@ -1,0 +1,20 @@
+600 600
+65535
+Camera
+0 0 -5
+Screen
+-3 -3 1 , 1 0 0 , 6 , 0 1 0, 6
+Sphere
+1.0,-0.8,3.0, 2.5,1,1,1,0.6,0.6
+Sphere
+-5.5,-0.5,7,2,0.07,0.07,0.1,1,1
+Sphere
+-2,3,5,1.5,0.3,0.9,0.2,0.5,0.5
+Plane
+Since the parser is now looking for a Number, we can now put arbitrary strings here
+Vector3D(-1000,10,-1000),Vector3D(1,0,0), 4294967296, new Vector3D(0,0,1), 4294967296,0.4,0.3,0.3)
+Light
+new Vector3D(0,-5,5), new Vector3D(0.6,0.6,0.6)
+Light
+new Vector3D(2,-5,1), new Vector3D(0.7,0.7,0.9
+parsertest4.ppm
