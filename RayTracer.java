@@ -4,6 +4,12 @@
 import org.apache.commons.math.geometry.Vector3D;
 public class RayTracer{
 	public final double EPSILON = 0.001;//need this so reflected rays don't get intercepted at starting point
+	/** returns a 2d array of all rays to be traced for a given screen
+	 * @param x, @param y, @param z, the co-ordinates of the origin of all rays
+	 * @param screen, the screen object representing the display
+	 * @param xres, @param yres, the x and y resolution of the screen. thus returned Ray[][] will be of
+	 * size [xres][yres]
+	 */
 	public Ray[][] initializeRays(double x, double y, double z, Screen screen, int xres, int yres){
 		Vector3D origin = new Vector3D(x,y,z);
 		//numRays = xres*yres;
@@ -18,10 +24,14 @@ public class RayTracer{
 		return rays;
 	}
 	/** returns pixel colour in vector3D format
-	 * can I refactor this to avoid creating an entire scene for every trace?
-	 * needs heavy optimisation to avoid redundant trace
+	 * Should investigate refactoring to avoid creating an entire scene for every trace
+	 * needs heavy optimisation to avoid redundant traces
 	 * should refactor out use of Vector3D as colour, as it requires a new object whenever it's modified
-	 * also to forbit negtive numbers
+	 * also to forbid negtive numbers
+	 * @param ray, the ray being traced through the screen.
+	 * @param scene, the scene the robot is being passed through
+	 * @param cDepth, the current recursive depth of this trace
+	 * @param maxDepth, the maximum depth to recursively trace to.
 	 *  */
 	public Vector3D Trace(Ray ray, Scene scene, int cDepth, int maxDepth){
 		double dist = Double.MAX_VALUE;
@@ -32,6 +42,7 @@ public class RayTracer{
 		double rCoeff =0;
 		int currentDepth = cDepth+1;
 		Vector3D colour = Vector3D.ZERO;
+		Vector3D baseColour = Vector3D.ZERO;
 		Vector3D reflectColour = Vector3D.ZERO;
 		Vector3D light;
 		Vector3D lightColour = Vector3D.ZERO;
@@ -41,7 +52,7 @@ public class RayTracer{
 			tempDist = scene.getScenery().get(i).collision(ray);
 			//System.out.print(tempDist);
 			if(tempDist < dist){
-				colour = scene.getScenery().get(i).getColour();
+				baseColour = scene.getScenery().get(i).getColour();
 				dist = tempDist;
 				object = i; //needed so we can get normal later
 				//temp debugging
@@ -66,7 +77,7 @@ public class RayTracer{
 					 //adding minor ambient light 
 			}
 						
-			colour = new Vector3D(lightColour.getX()*colour.getX(),lightColour.getY()*colour.getY(),lightColour.getZ()*colour.getZ());
+			colour = new Vector3D(lightColour.getX()*baseColour.getX(),lightColour.getY()*baseColour.getY(),lightColour.getZ()*baseColour.getZ());
 //System.out.println(colour.getZ());
 		//	colour = colour.scalarMultiply(intensity);
 					//account for secondary reflected rays
@@ -80,7 +91,7 @@ public class RayTracer{
 			//System.out.println((int)(reflectColour.getX()*65535) + " " +(int)(65535*reflectColour.getY()) + " " + (int)(65535*reflectColour.getZ()));
 			/*experimenting with colour mixing*/
 			//colour = new Vector3D(colour.getX()+colour.getX()*rCoeff*reflectColour.getX(),colour.getY()+colour.getY()*rCoeff*reflectColour.getY(),colour.getZ()+colour.getZ()*rCoeff*reflectColour.getZ());
-			//colour = new Vector3D(colour.getX()*rCoeff*reflectColour.getX(),colour.getY()*rCoeff*reflectColour.getY(),colour.getZ()*rCoeff*reflectColour.getZ());
+			reflectColour = new Vector3D(baseColour.getX()*reflectColour.getX(),baseColour.getY()*reflectColour.getY(),baseColour.getZ()*reflectColour.getZ());
 			colour = new Vector3D(1,colour,rCoeff,reflectColour);
 		}
 

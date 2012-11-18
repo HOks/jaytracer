@@ -1,6 +1,7 @@
 jaytracer.
 very simple ray tracer in java, currently outputs to .ppm
 requires apache.commons.math
+Unit Tests require JUnit, no obvious version requirements, although only tested in 4.8.1
 currently uses internally defined 3d objects, only spheres and planes.
 To run after compilation - java RayDriver2 <filename>
 where the file in <filename> describes all settings and scene.
@@ -11,8 +12,12 @@ further information on setup files and their construction is in setup.txt
 currently only supports basic raycasting and reflections, colour mixing for
 reflections needs fixing.
 
-high priority TODOs:
+TODOs:
+complete unit testing of RayTracer in RayTracerTester.java
+including checking completeness with code coverage tool
 Refraction
 Specular Shading
 Shadows
 Replacing naive intersection finding algorithm
+
+lower priority: build script, cleaner documentation.
