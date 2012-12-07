@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<project default="main">
+<target name="main" depends="compile">
+<echo>
+Compiling files
+</echo>
+</target>
+<target name="compile">
+<mkdir dir = "bin" />
+<javac srcdir="." destdir="bin" />
+</target>
+<target name="test" depends="compile">
+<mkdir dir ="report" />
+<junit printsummary="yes" haltonerror="no" haltonfailure="no" 
+	fork="yes">
+	<formatter type ="plain" usefile = "false" />
+	<formatter type="xml" />
+<batchtest todir="report" >
+<fileset dir =".">
+	<include name="**/*Tester.java" />
+</fileset>
+</batchtest>
+<classpath>
+	<pathelement location="bin" />
+</classpath>
+</junit>
+</target>
+</project>

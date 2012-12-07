@@ -4,6 +4,7 @@
 import org.apache.commons.math.geometry.Vector3D;
 public class RayTracer{
 	public final double EPSILON = 0.001;//need this so reflected rays don't get intercepted at starting point
+	public final double SCALE =1;
 	/** returns a 2d array of all rays to be traced for a given screen
 	 * @param x, @param y, @param z, the co-ordinates of the origin of all rays
 	 * @param screen, the screen object representing the display
@@ -12,14 +13,20 @@ public class RayTracer{
 	 */
 	public Ray[][] initializeRays(double x, double y, double z, Screen screen, int xres, int yres){
 		Vector3D origin = new Vector3D(x,y,z);
-		//numRays = xres*yres;
-		Ray[][] rays = new Ray[xres][yres];
+		Ray[][] rays;
+		//<= used as we want neat behaviour on bad exceptions rather than returning say a [50][0] array
+		if (screen ==null || xres <=0 || yres <= 0){rays = new Ray[0][0];}
+		else{
+		rays = new Ray[xres][yres];
 		for(int i =0; i < xres; i++){
 			for(int j=0; j < yres; j++){
-				Vector3D screenPoint = new Vector3D(1,screen.getOrigin(),(((double)i)/xres)*screen.getL1(), screen.getV1(),(((double)j)/yres)*screen.getL2(),screen.getV2()); 
+				Vector3D screenPoint = new Vector3D(SCALE,screen.getOrigin(),(((double)i)/xres)*screen.getL1(), screen.getV1(),(((double)j)/yres)*screen.getL2(),screen.getV2()); 
 				//System.out.println(screenPoint.getX() + " " +screenPoint.getY() + " " +screenPoint.getZ());
-				rays[i][j] = new Ray(origin, screenPoint.subtract(1,origin));
+				try{
+				rays[i][j] = new Ray(origin, screenPoint.subtract(SCALE,origin));
+				}catch (Exception e){System.out.println(e.toString());}
 			}
+		}
 		}
 		return rays;
 	}
